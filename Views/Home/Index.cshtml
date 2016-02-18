@@ -1,0 +1,84 @@
+﻿@model MvcApplication4.Models.User
+@{
+    ViewBag.Title = "Welcome";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                
+            </hgroup>
+           
+        </div>
+    </section>
+}
+<h3>Registration </h3>
+
+<div id="checking">Checking...</div>
+
+<form method="post" action="/User/Register" enctype="multipart/form-data">
+   
+    @Html.ValidationSummary()
+        @*Upload profile picture: <input type="file" name="image" />*@
+   
+    
+    UserName: <input type="text" name="Name" id="UserName" /> <input id="b1" type="button" value="check" />
+    <br /><div id="result"></div>
+    Password:   <input type="text" name="Password" /><br />
+    Age:   <input type="text" name="age" />Cast:   <input type="text" name="cast" /><br />
+    Qualification:   <input type="text" name="qualification" />CNIC:   <input type="text" name="cnic" /><br />
+    Cell#:   <input type="text" name="cellno" />Work:   <input type="text" name="work" /><br />
+    Income:   <input type="text" name="income" />Address:   <input type="text" name="address" /><br />
+
+    <input type="submit" class="btn btn-info" value="Register" />
+</form>
+
+   @* <h3>Upload Images </h3>
+    <form action="/Home/save" method="post" enctype="multipart/form-data">
+
+        <p style="margin-left: 20px; font-size: 14px">
+            Upload profile picture: <input type="file" name="image" />
+        </p>
+        <p><input type="submit" value="upload" /></p>
+    </form>*@
+   
+    
+   
+
+    
+    
+    
+   
+
+
+
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+
+    $(document).ready(function () {
+
+        $('#checking').hide();
+
+        $('#b1').click(function () {
+
+            var userName = $('#UserName').val();
+
+            //alert('User Name ='+ userName);
+            $('#checking').show();
+            $.getJSON("/User/CheckUserName?UserName=" + userName, function (data) {
+                $('#checking').hide();
+                if (data) {
+                    $('#result').text("User already exists in database");
+
+                }
+                else {
+                    $('#result').text("User Name is available");
+                }
+            });
+
+        });
+
+    });
+</script>
